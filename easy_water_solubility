@@ -1,0 +1,39 @@
+import re
+
+def water_soluble(molecular_formula):
+    # Initialize counts
+    count_oxygen = 0
+    count_nitrogen = 0
+    count_carbon = 0
+
+    # Use regular expressions to parse the molecular formula
+    elements = re.findall(r'([A-Z][a-z]*)(\d*)', molecular_formula)
+
+    for element, count_str in elements:
+        count = int(count_str) if count_str else 1  # If no count is provided, assume 1
+        if element == 'O':
+            count_oxygen += count
+        elif element == 'N':
+            count_nitrogen += count
+        elif element == 'C':
+            count_carbon += count
+
+    # Suggestions based on counts
+    if count_oxygen >= count_carbon and count_nitrogen >= count_carbon:
+        return "likely water soluble"
+    else:
+        return 'likely insoluble'
+
+
+
+# Input for the molecular formula
+compound_formula = input('Enter a molecular formula (e.g., H2O): ')
+
+if compound_formula:
+    ws = water_soluble(compound_formula)
+
+    if ws:
+        print(f"Based on the number of carbon, hydrogen, and nitrogen atoms, {compound_formula} is {ws}")
+
+    else:
+        print(f"Cannot determine solubility of {compound_formula}")
